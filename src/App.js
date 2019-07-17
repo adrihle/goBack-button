@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Main from './views/Main'
+import Second from './views/Second'
+import NavBar from './components/NavBar'
+import BottomNav from './components/BottomNav'
+import { Router, Route, Switch } from 'react-router-dom'
+import { createBrowserHistory } from 'history'
 
-function App() {
+const history = createBrowserHistory()
+
+export default function App() {
+
+  const [active, setActive] = useState(false);
+
+  const goBack = () => {
+    var ruta = history.location.pathname
+    if (ruta === '/second'){
+      history.goBack()
+    }
+  }
+
+  history.listen((location, action) => {
+    var ruta = location.pathname
+    if (ruta === '/second'){
+      setActive(true)
+    }else {
+      setActive(false)
+    }
+  })
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router history={history}>
+        <NavBar goback={() => goBack()} active={active} history={history}/>
+        <Switch>
+          <Route path='/'  exact component={Main}/>
+          <Route path='/second' exact component={Second} />
+        </Switch>
+        <BottomNav />
+      </Router>
     </div>
   );
 }
 
-export default App;
