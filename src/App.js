@@ -3,7 +3,6 @@ import './App.css';
 import Main from './views/Main'
 import Second from './views/Second'
 import NavBar from './components/NavBar'
-import BottomNav from './components/BottomNav'
 import { Router, Route, Switch } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 
@@ -38,7 +37,6 @@ export default function App() {
           <Route path='/'  exact component={Main}/>
           <Route path='/second' exact component={Second} />
         </Switch>
-        <BottomNav />
       </Router>
     </div>
   );
